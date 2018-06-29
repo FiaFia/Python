@@ -1,3 +1,10 @@
+# coding=utf-8
+"""
+@author:FiaFia
+@data:2018/3/7
+@version:Python3.6
+"""
+
 def bonusTaxRate(bonus,thirteen_month_salary):
 
     total = bonus + thirteen_month_salary
@@ -26,10 +33,10 @@ def bonusTaxRate(bonus,thirteen_month_salary):
 
 
 def bonusAfterTax(bonus, thirteen_month_salary):
-    # 纳税额
+    #纳税额
     tax = bonusTaxRate(bonus,thirteen_month_salary)
 
-    # 税后bonus
+    #税后bonus
     bonus_after_tax = bonus + thirteen_month_salary - tax
 
     print('Bonus after tax is : %d' % bonus_after_tax)
