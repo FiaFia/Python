@@ -6,7 +6,19 @@
 """
 
 
-def taxRate(base):
+def oldTaxRate(base):
+    '''
+旧的税率表及速扣数
+速扣数的公式（本档次税率-上档次税率）*上档次最高应纳税工资薪金的金额+上档次的速算扣除数
+纳税额          税率    速扣数
+<1500           3%      0
+1500-4500       10%     105
+4500-9000       20%     555
+9000-35000      25%     1005
+35000-55000     30%     2755
+55000-80000     35%     5505
+>80000          45%     13505
+'''  
     if base < 0:
         tax = 0
     elif base <= 1500:
@@ -28,6 +40,39 @@ def taxRate(base):
 
     return tax
 
+def newTaxRate(base):
+'''
+新的税率表及速扣数
+速扣数的公式（本档次税率-上档次税率）*上档次最高应纳税工资薪金的金额+上档次的速算扣除数
+纳税额          税率    速扣数
+<3000           3%      0
+3000-12000      10%     210
+12000-25000     20%     1410
+25000-35000     25%     2660
+35000-55000     30%     4410
+55000-80000     35%     7160
+>80000          45%     15160
+'''    
+    if base < 0:
+        tax = 0
+    elif base <= 3000:
+        tax = base * 0.03
+    elif base > 3000 and base <= 12000:
+        tax = base * 0.1 - 210
+    elif base > 12000 and base <= 25000:
+        tax = base * 0.2 - 1410
+    elif base > 25000 and base <= 35000:
+        tax = base * 0.25 - 2660
+    elif base > 35000 and base <= 55000:
+        tax = base * 0.3 - 4410
+    elif base > 55000 and base <= 80000:
+        tax = base * 0.35 - 7160
+    elif base > 80000:
+        tax = base * 0.45 - 15160
+
+    #print('Tax of salary is : %d' % tax)
+
+    return tax
 
 def salaryAfterTax(salaryBeforeTax):
 
@@ -39,8 +84,8 @@ def salaryAfterTax(salaryBeforeTax):
     unemployRating = 0.002
     housingFundRating = 0.12
 
-    # 2016年社平工资7706，五险一金上限是社评三倍工资
-    averageSalary = 7706   # 2016社评工资7706， 2017社评工资8467
+    # 五险一金上限是社评三倍工资
+    averageSalary = 8467   # 2016社平工资7706， 2017社平工资8467
     tripleAverageSalary = 3 * averageSalary
 
     if salaryBeforeTax < tripleAverageSalary:
@@ -54,9 +99,9 @@ def salaryAfterTax(salaryBeforeTax):
 
     # 纳税额
     oldPayment = salaryBeforeTax - totalInsurance - oldThreshold
-    oldTax = taxRate(oldPayment)
+    oldTax = oldTaxRate(oldPayment)
     newPayment = salaryBeforeTax - totalInsurance - newThreshold
-    newTax = taxRate(newPayment)
+    newTax = newTaxRate(newPayment)
 
     # 税后工资
     oldSalaryAfterTax = salaryBeforeTax - totalInsurance - oldTax
