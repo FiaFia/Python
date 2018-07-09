@@ -30,6 +30,9 @@ def copyFile(filelist, targetDir):
 
 if __name__ == '__main__':
     #fileList = 'filelist.txt'
-    fileList = input('Please input filelist:')
-    targetDir = 'NewFolder'
+    #targetDir = 'NewFolder'
+    fileList = input('Please input filelist(such as filelist.txt): ')
+    targetDir = input ('Please input the target Folder(such as NewFolder): ')
+    if not os.path.exists(targetDir):
+        os.makedirs(targetDir)
     copyFile(fileList, targetDir)
